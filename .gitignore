@@ -1,9 +1,6 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
+# Ignore AIR created executables
+air/*
 
-# Project property files
-.actionScriptProperties
-.flexProperties
-.settings/
-.project
+# Ignore FlashDevelop executables
+bin/*
+obj/*
