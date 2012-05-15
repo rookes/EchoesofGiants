@@ -3,11 +3,14 @@ package
 	import org.flixel.*;
 	
 	public class Asteroid extends FlxSprite
-	{		
+	{
+		
+		
+		
 		public function Asteroid(X:Number=0, Y:Number=0)
 		{
 			super(X, Y);
-			loadGraphic(Assets.ASTEROID_TEXTURE, true, false, 16, 16, false);
+			(Assets.ASTEROID_TEXTURE, true, false, 16, 16, false);
 			scale = new FlxPoint(2, 2);
 			addAnimation("rotate", [0, 1, 2, 3], 4, true);
 		}

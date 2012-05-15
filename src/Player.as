@@ -1,5 +1,6 @@
 package  
 {
+	import org.flixel.FlxEmitter;
 	import org.flixel.FlxG;
 	import org.flixel.FlxU;
 	import org.flixel.FlxGroup;
@@ -129,7 +130,7 @@ package
 		
 		protected function checkBounds():void
 		{
-			//we need to check if the player has pased the bounds of the screen
+			//we need to check if the player has passed the bounds of the screen
 			if (x >= FlxG.worldBounds.width)
 			{
 				x = 0;
