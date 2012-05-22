@@ -4,3 +4,6 @@ air/*
 # Ignore FlashDevelop executables
 bin/*
 obj/*
+
+# OS X Files
+*.DS_STORE
