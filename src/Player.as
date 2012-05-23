@@ -51,58 +51,7 @@ package
 		}
 		
 		protected function checkInput():void
-		{
-			/*
-			 * Controller Controls
-			 * Use the 
-			 * Should probably add some checking to see where or not the controller is even plugged in
-			 */
-			
-			//move the player with the left analog stick
-			if (ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickXAxis) > 0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickXAxis) < -0.5)
-			{
-				acceleration.x = ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickXAxis) * 4 * maxVelocity.x;
-			}
-			
-			if (ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickYAxis) > 0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickYAxis) < -0.5)
-			{
-				acceleration.y = ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickYAxis) * 4 * -maxVelocity.y;
-			}
-			//fire bullets with the right analog stick
-			if (ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickXAxis) > 0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickXAxis) < -0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickYAxis) > 0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickYAxis) < -0.5)
-			{
-				fireBullet(ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickXAxis),
-							ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickYAxis));
-			}
-			
-			/*
-			 * Keyboard Controls
-			 * Move with WASD, shoot by clicking the left mouse button
-			 */
-			
-			 //move with WASD
-			if (FlxG.keys.A)
-			{
-			 acceleration.x = -maxVelocity.x * 4;
-			}
-			if (FlxG.keys.D)
-			{
-			 acceleration.x = maxVelocity.x * 4;
-			}
-			if (FlxG.keys.W)
-			{
-			 acceleration.y = -maxVelocity.y * 4;
-			}
-			if (FlxG.keys.S)
-			{
-			 acceleration.y = maxVelocity.y * 4;
-			}
-
+		{			
 			//if the user presses C, toggle the cursor
 			if (FlxG.keys.justReleased("C"))
 			{
@@ -155,6 +104,8 @@ package
 		{
 			var bullet:Bullet = new Bullet(x , y, XVelocity, YVelocity);
 			bullets.add(bullet);
+			velocity.x = -XVelocity*100;
+			velocity.y = -YVelocity*100;
 		}
 		
 		private function cleanUpBullets():void
