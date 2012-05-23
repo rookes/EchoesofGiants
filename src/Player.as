@@ -10,13 +10,13 @@ package
 
 	public class Player extends FlxSprite
 	{
-		public const MAX_WIDTH:int = 64;
 		public var bullets:FlxGroup;
 		private var showCursor:Boolean = true;
 		
 		protected var _nearestStar:Star; //the star closest to the player
 		protected var _rotationAngle:Number;
 		
+		//variables to handle player movement speed
 		private var _movementMultiplier:int;
 		private const MAX_MOVEMENT_MULTIPLIER:int = 100;
 		private const SLOW_MOVEMENT_MULTIPLIER:int = 50;
@@ -46,6 +46,9 @@ package
 			FlxG.mouse.show(Assets.CURSOR_TEXTURE, 2, 4, 4);
 		}
 		
+		/**
+		 * Update is called every frame
+		 */
 		override public function update():void
 		{
 			checkInput();
@@ -54,6 +57,9 @@ package
 			super.update();
 		}
 		
+		/**
+		 * Checks for any user input from the mouse and keyboard
+		 */
 		protected function checkInput():void
 		{			
 			//if the user presses C, toggle the cursor
@@ -79,6 +85,7 @@ package
 				fireBullet(Math.cos((angle+90)/(180/Math.PI)), Math.sin((angle+90)/(180/Math.PI)));
 			}
 			
+			//if the user is pressing shift then slow 
 			if (FlxG.keys.pressed("SHIFT"))
 			{
 				_movementMultiplier = SLOW_MOVEMENT_MULTIPLIER;
@@ -90,6 +97,10 @@ package
 			
 		}
 		
+		/**
+		 * Check to see if the player is outside of the game bounds
+		 * If the player is outside of the game bounds, shoot him out the other side
+		 */
 		protected function checkBounds():void
 		{
 			//we need to check if the player has passed the bounds of the screen
@@ -114,6 +125,12 @@ package
 			}
 		}
 		
+		/**
+		 * Create and fire a bullet
+		 * 
+		 * @param	XVelocity				The x velocity to shoot the bullet at
+		 * @param	YVelocity				The y velocity to shoot the bullet at
+		 */
 		protected function fireBullet(XVelocity:Number, YVelocity:Number):void
 		{
 			var bullet:Bullet = new Bullet(x , y, XVelocity, YVelocity);
@@ -122,6 +139,11 @@ package
 			velocity.y = -YVelocity * _movementMultiplier;
 		}
 		
+		/**
+		 * Removes dead bullets from the bullets group
+		 * 
+		 * Seems to be super inefficient, there has to be a better way to handle this
+		 */
 		private function cleanUpBullets():void
 		{
 			for each (var bullet:Bullet in bullets)
@@ -133,6 +155,10 @@ package
 			}
 		}
 		
+		/**
+		 * Respawns the player at the center of the screen
+		 * Flickers the player as a visual queue of death
+		 */
 		public function respawn():void
 		{
 			flicker();
