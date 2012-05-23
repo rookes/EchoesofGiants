@@ -10,10 +10,10 @@ package
 	public class Galaxy extends FlxSprite
 	{
 		/**
-		 * Creates a galaxy at (X, Y) from an image.
-		 * @param	X			X value of the planet
-		 * @param	Y			Y value of the planet
-		 * @param	graphic		Image file used for the planet - ideally, take this from Assets
+		 * Creates a Galaxy at (X, Y) from an image.
+		 * @param	X			X position
+		 * @param	Y			Y position
+		 * @param	graphic		Image file used for the Galaxy - ideally, take this from Assets
 		 */
 		public function Galaxy(X:Number = 0, Y:Number = 0) 
 		{
