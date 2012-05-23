@@ -43,8 +43,6 @@ package
 		
 		override public function update():void
 		{
-			//not sure if needed
-			ControllerManager.Update();
 			checkInput();
 			checkBounds();
 			cleanUpBullets();
