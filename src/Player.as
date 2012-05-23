@@ -16,6 +16,9 @@ package
 		protected var _nearestStar:Star; //the star closest to the player
 		protected var _rotationAngle:Number;
 		
+		private const MAX_MOVEMENT_MULTIPLIER:int = 100;
+		private const SLOW_MOVEMENT_MULTIPLIER:int = 50;
+		
 		//whether or not the player is in a blackhole
 		public var inBlackhole:Boolean = false;
 
@@ -31,7 +34,8 @@ package
 			loadGraphic(Assets.PLAYER00_TEXTURE, false, false, 4, 4, false);
 			maxVelocity.x = 60;
 			maxVelocity.y = 60;
-			drag.x = maxVelocity.x*4;
+			drag.x = maxVelocity.x/4;
+			drag.y = maxVelocity.y/4;
 			antialiasing = true;
 			exists = true;
 			bullets = new FlxGroup();
@@ -72,6 +76,16 @@ package
 				var angle:Number = FlxU.getAngle(FlxG.mouse.getWorldPosition(), new FlxPoint(x, y));
 				fireBullet(Math.cos((angle+90)/(180/Math.PI)), Math.sin((angle+90)/(180/Math.PI)));
 			}
+			
+			if (FlxG.keys.pressed("SHIFT"))
+			{
+				_movementMultiplier = SLOW_MOVEMENT_MULTIPLIER;
+			}
+			else
+			{
+				_movementMultiplier = MAX_MOVEMENT_MULTIPLIER;
+			}
+			
 		}
 		
 		protected function checkBounds():void
@@ -102,8 +116,8 @@ package
 		{
 			var bullet:Bullet = new Bullet(x , y, XVelocity, YVelocity);
 			bullets.add(bullet);
-			velocity.x = -XVelocity*100;
-			velocity.y = -YVelocity*100;
+			velocity.x = -XVelocity * _movementMultiplier;
+			velocity.y = -YVelocity * _movementMultiplier;
 		}
 		
 		private function cleanUpBullets():void
