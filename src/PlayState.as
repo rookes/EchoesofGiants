@@ -36,7 +36,6 @@ package
 		override public function update():void
 		{
 			super.update();
-			ControllerManager.Update();
 			checkCollisions();
 			checkInput();
 			manageEnemies();
@@ -45,7 +44,7 @@ package
 		override protected function checkInput():void
 		{
 			//if the player presses back or escape, let's return to the menu
-			if (FlxG.keys.ESCAPE || ControllerManager.KeyDown(ControllerManager.ControllerOne,ControllerManager.BackButton))
+			if (FlxG.keys.ESCAPE)
 			{
 				onBack();
 			}
