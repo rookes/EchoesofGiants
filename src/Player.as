@@ -17,6 +17,7 @@ package
 		protected var _nearestStar:Star; //the star closest to the player
 		protected var _rotationAngle:Number;
 		
+		private var _movementMultiplier:int;
 		private const MAX_MOVEMENT_MULTIPLIER:int = 100;
 		private const SLOW_MOVEMENT_MULTIPLIER:int = 50;
 		
