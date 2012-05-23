@@ -21,16 +21,20 @@ package
         {	
 			//let's create the background
 			_background = new FlxSprite(0, 0);
-			add (_background);
+			add(_background);
 			_background.makeGraphic(FlxG.width * FlxG.camera.zoom, FlxG.height * FlxG.camera.zoom, 0xff000000);
 			
 			
 			_player = new Player(FlxG.width / 2 - 2, FlxG.height / 2 - 2);
 			add(_player.bullets);
 			add(_player);
+		
+			var ggg:GalaxyGroup = new GalaxyGroup(100, 100).addTurret();
+			ggg.rotate(40);
+			add(ggg);
 			
 			_enemies = new FlxGroup();
-			add(_enemies);
+			//add(_enemies);
 		}
 		
 		override public function update():void
@@ -39,7 +43,7 @@ package
 			ControllerManager.Update();
 			checkCollisions();
 			checkInput();
-			manageEnemies();
+			//manageEnemies();
 		}
 		
 		override protected function checkInput():void

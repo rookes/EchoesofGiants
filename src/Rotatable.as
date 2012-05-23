@@ -6,6 +6,12 @@ package
 	 */
 	public interface Rotatable 
 	{
+		/** Rotates the rotatable object, indicating an input angle.
+		 * @param 	theta		Amount of rotational force given by the player, in degrees. The rotatable object's 
+		 * 						actual change in angle may vary according to implementation.
+		 * 
+		 * @return Returns the current angular velocity of the object.
+		 * */
 		function rotate(theta:Number):Number;
 	}
 }

@@ -2,7 +2,7 @@ package
 {
 	import org.flixel.*;
 	/**
-	 * A reflective mirror most often included in GalaxyGroups
+	 * A mirror which reflects bullets and other materials.
 	 * @author Jonathan Miller
 	 */
 	public class Mirror extends FlxSprite
