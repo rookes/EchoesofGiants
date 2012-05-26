@@ -46,18 +46,6 @@ package
 		
 		override public function update():void
 		{
-			ControllerManager.Update();
-			
-			if (ControllerManager.KeyDown(ControllerManager.ControllerOne, ControllerManager.StartButton))
-			{
-				onStart();
-			}
-			
-			if (ControllerManager.KeyDown(ControllerManager.ControllerOne, ControllerManager.BackButton))
-			{
-				onExit();
-			} 
-			
 			super.update();
 		}
 		

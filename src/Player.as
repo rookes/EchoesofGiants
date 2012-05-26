@@ -10,12 +10,16 @@ package
 
 	public class Player extends FlxSprite
 	{
-		public const MAX_WIDTH:int = 64;
 		public var bullets:FlxGroup;
 		private var showCursor:Boolean = true;
 		
 		protected var _nearestStar:Star; //the star closest to the player
 		protected var _rotationAngle:Number;
+		
+		//variables to handle player movement speed
+		private var _movementMultiplier:int;
+		private const MAX_MOVEMENT_MULTIPLIER:int = 100;
+		private const SLOW_MOVEMENT_MULTIPLIER:int = 50;
 		
 		//whether or not the player is in a blackhole
 		public var inBlackhole:Boolean = false;
@@ -32,7 +36,8 @@ package
 			loadGraphic(Assets.PLAYER00_TEXTURE, false, false, 4, 4, false);
 			maxVelocity.x = 60;
 			maxVelocity.y = 60;
-			drag.x = maxVelocity.x*4;
+			drag.x = maxVelocity.x/4;
+			drag.y = maxVelocity.y/4;
 			antialiasing = true;
 			exists = true;
 			bullets = new FlxGroup();
@@ -41,69 +46,22 @@ package
 			FlxG.mouse.show(Assets.CURSOR_TEXTURE, 2, 4, 4);
 		}
 		
+		/**
+		 * Update is called every frame
+		 */
 		override public function update():void
 		{
-			//not sure if needed
-			ControllerManager.Update();
 			checkInput();
 			checkBounds();
 			cleanUpBullets();
 			super.update();
 		}
 		
+		/**
+		 * Checks for any user input from the mouse and keyboard
+		 */
 		protected function checkInput():void
-		{
-			/*
-			 * Controller Controls
-			 * Use the 
-			 * Should probably add some checking to see where or not the controller is even plugged in
-			 */
-			
-			//move the player with the left analog stick
-			if (ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickXAxis) > 0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickXAxis) < -0.5)
-			{
-				acceleration.x = ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickXAxis) * 4 * maxVelocity.x;
-			}
-			
-			if (ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickYAxis) > 0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickYAxis) < -0.5)
-			{
-				acceleration.y = ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.LeftStickYAxis) * 4 * -maxVelocity.y;
-			}
-			//fire bullets with the right analog stick
-			if (ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickXAxis) > 0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickXAxis) < -0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickYAxis) > 0.5
-				|| ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickYAxis) < -0.5)
-			{
-				fireBullet(ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickXAxis),
-							ControllerManager.GetAxisValue(ControllerManager.ControllerOne, ControllerManager.RightStickYAxis));
-			}
-			
-			/*
-			 * Keyboard Controls
-			 * Move with WASD, shoot by clicking the left mouse button
-			 */
-			
-			 //move with WASD
-			if (FlxG.keys.A)
-			{
-			 acceleration.x = -maxVelocity.x * 4;
-			}
-			if (FlxG.keys.D)
-			{
-			 acceleration.x = maxVelocity.x * 4;
-			}
-			if (FlxG.keys.W)
-			{
-			 acceleration.y = -maxVelocity.y * 4;
-			}
-			if (FlxG.keys.S)
-			{
-			 acceleration.y = maxVelocity.y * 4;
-			}
-
+		{			
 			//if the user presses C, toggle the cursor
 			if (FlxG.keys.justReleased("C"))
 			{
@@ -126,8 +84,23 @@ package
 				var angle:Number = FlxU.getAngle(FlxG.mouse.getWorldPosition(), new FlxPoint(x, y));
 				fireBullet(Math.cos((angle+90)/(180/Math.PI)), Math.sin((angle+90)/(180/Math.PI)));
 			}
+			
+			//if the user is pressing shift then slow 
+			if (FlxG.keys.pressed("SHIFT"))
+			{
+				_movementMultiplier = SLOW_MOVEMENT_MULTIPLIER;
+			}
+			else
+			{
+				_movementMultiplier = MAX_MOVEMENT_MULTIPLIER;
+			}
+			
 		}
 		
+		/**
+		 * Check to see if the player is outside of the game bounds
+		 * If the player is outside of the game bounds, shoot him out the other side
+		 */
 		protected function checkBounds():void
 		{
 			//we need to check if the player has passed the bounds of the screen
@@ -152,12 +125,25 @@ package
 			}
 		}
 		
+		/**
+		 * Create and fire a bullet
+		 * 
+		 * @param	XVelocity				The x velocity to shoot the bullet at
+		 * @param	YVelocity				The y velocity to shoot the bullet at
+		 */
 		protected function fireBullet(XVelocity:Number, YVelocity:Number):void
 		{
 			var bullet:Bullet = new Bullet(x , y, XVelocity, YVelocity);
 			bullets.add(bullet);
+			velocity.x = -XVelocity * _movementMultiplier;
+			velocity.y = -YVelocity * _movementMultiplier;
 		}
 		
+		/**
+		 * Removes dead bullets from the bullets group
+		 * 
+		 * Seems to be super inefficient, there has to be a better way to handle this
+		 */
 		private function cleanUpBullets():void
 		{
 			for each (var bullet:Bullet in bullets)
@@ -169,6 +155,10 @@ package
 			}
 		}
 		
+		/**
+		 * Respawns the player at the center of the screen
+		 * Flickers the player as a visual queue of death
+		 */
 		public function respawn():void
 		{
 			flicker();
