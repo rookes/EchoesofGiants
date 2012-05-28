@@ -106,25 +106,24 @@ package
 		 */
 		protected function checkBounds():void
 		{
-			//we need to check if the player has passed the bounds of the screen
 			if (x >= FlxG.worldBounds.width)
 			{
-				x = 0;
+				x = 1;
 			}
 			
-			if (x < 0)
+			if (x <= 0)
 			{
 				x = FlxG.worldBounds.width;
 			}
 			
 			if (y >= FlxG.worldBounds.height)
 			{
-				y = 0;
+				y = 1;
 			}
 			
-			if (y < 0)
+			if (y <= 0)
 			{
-				y = FlxG.worldBounds.width;
+				y = FlxG.worldBounds.height;
 			}
 		}
 		
@@ -136,7 +135,7 @@ package
 		 */
 		protected function fireBullet(XVelocity:Number, YVelocity:Number):void
 		{
-			var bullet:Bullet = new Bullet(x , y, XVelocity * _bullet_speed, YVelocity * _bullet_speed);
+			var bullet:Bullet = new Bullet(x + width / 2 , y + height / 2, XVelocity * _bullet_speed, YVelocity * _bullet_speed);
 			bullets.add(bullet);
 			velocity.x -= XVelocity * _movementMultiplier;
 			velocity.y -= YVelocity * _movementMultiplier;

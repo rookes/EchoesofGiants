@@ -11,6 +11,8 @@ package
 		{
 			super(X, Y);
 			loadGraphic(Assets.BULLET00_TEXTURE, false, false, 2, 2, false);
+			x -= width / 2;
+			y -= height / 2;
 			velocity.x = XAxisValue * 150;
 			velocity.y = YAxisValue * 150;
 			maxVelocity.x = 400;
