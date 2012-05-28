@@ -16,9 +16,12 @@ package
 		protected var _rotationAngle:Number;
 		
 		//variables to handle player movement speed
-		private var _movementMultiplier:int;
-		private const MAX_MOVEMENT_MULTIPLIER:int = 100;
-		private const SLOW_MOVEMENT_MULTIPLIER:int = 50;
+		private var _movementMultiplier:Number;
+		private const NORMAL_MOVEMENT_MULTIPLIER:Number = 7;
+		private const SLOW_MOVEMENT_MULTIPLIER:Number = 3;
+	
+		//standard bullet speed
+		private var _bullet_speed:Number = 1;
 		
 		//whether or not the player is in a blackhole
 		public var inBlackhole:Boolean = false;
@@ -33,8 +36,8 @@ package
 		{
 			super(X, Y);
 			loadGraphic(Assets.PLAYER00_TEXTURE, false, false, 4, 4, false);
-			maxVelocity.x = 60;
-			maxVelocity.y = 60;
+			maxVelocity.x = 170;
+			maxVelocity.y = 170;
 			drag.x = maxVelocity.x/4;
 			drag.y = maxVelocity.y/4;
 			antialiasing = true;
@@ -91,7 +94,7 @@ package
 			}
 			else
 			{
-				_movementMultiplier = MAX_MOVEMENT_MULTIPLIER;
+				_movementMultiplier = NORMAL_MOVEMENT_MULTIPLIER;
 			}
 			
 		}
@@ -132,10 +135,10 @@ package
 		 */
 		protected function fireBullet(XVelocity:Number, YVelocity:Number):void
 		{
-			var bullet:Bullet = new Bullet(x , y, XVelocity, YVelocity);
+			var bullet:Bullet = new Bullet(x , y, XVelocity * _bullet_speed, YVelocity * _bullet_speed);
 			bullets.add(bullet);
-			velocity.x = -XVelocity * _movementMultiplier;
-			velocity.y = -YVelocity * _movementMultiplier;
+			velocity.x -= XVelocity * _movementMultiplier;
+			velocity.y -= YVelocity * _movementMultiplier;
 		}
 		
 		/**
