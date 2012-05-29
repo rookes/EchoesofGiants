@@ -4,9 +4,6 @@ package
 	
 	public class Asteroid extends FlxSprite
 	{
-		
-		
-		
 		public function Asteroid(X:Number=0, Y:Number=0)
 		{
 			super(X, Y);

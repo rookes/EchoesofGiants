@@ -17,9 +17,12 @@ package
 		protected var _rotationAngle:Number;
 		
 		//variables to handle player movement speed
-		private var _movementMultiplier:int;
-		private const MAX_MOVEMENT_MULTIPLIER:int = 100;
-		private const SLOW_MOVEMENT_MULTIPLIER:int = 50;
+		private var _movementMultiplier:Number;
+		private const NORMAL_MOVEMENT_MULTIPLIER:Number = 7;
+		private const SLOW_MOVEMENT_MULTIPLIER:Number = 3;
+	
+		//standard bullet speed
+		private var _bullet_speed:Number = 1;
 		
 		//whether or not the player is in a blackhole
 		public var inBlackhole:Boolean = false;
@@ -34,8 +37,8 @@ package
 		{
 			super(X, Y);
 			loadGraphic(Assets.PLAYER00_TEXTURE, false, false, 4, 4, false);
-			maxVelocity.x = 60;
-			maxVelocity.y = 60;
+			maxVelocity.x = 170;
+			maxVelocity.y = 170;
 			drag.x = maxVelocity.x/4;
 			drag.y = maxVelocity.y/4;
 			antialiasing = true;
@@ -85,14 +88,14 @@ package
 				fireBullet(Math.cos((angle+90)/(180/Math.PI)), Math.sin((angle+90)/(180/Math.PI)));
 			}
 			
-			//if the user is pressing shift then slow 
+			//if the user is pressing shift then slowdown the player's movement
 			if (FlxG.keys.pressed("SHIFT"))
 			{
 				_movementMultiplier = SLOW_MOVEMENT_MULTIPLIER;
 			}
 			else
 			{
-				_movementMultiplier = MAX_MOVEMENT_MULTIPLIER;
+				_movementMultiplier = NORMAL_MOVEMENT_MULTIPLIER;
 			}
 			
 		}
@@ -103,25 +106,24 @@ package
 		 */
 		protected function checkBounds():void
 		{
-			//we need to check if the player has passed the bounds of the screen
 			if (x >= FlxG.worldBounds.width)
 			{
-				x = 0;
+				x = 1;
 			}
 			
-			if (x < 0)
+			if (x <= 0)
 			{
-				x = FlxG.width;
+				x = FlxG.worldBounds.width;
 			}
 			
 			if (y >= FlxG.worldBounds.height)
 			{
-				y = 0;
+				y = 1;
 			}
 			
-			if (y < 0)
+			if (y <= 0)
 			{
-				y = FlxG.height;
+				y = FlxG.worldBounds.height;
 			}
 		}
 		
@@ -133,10 +135,10 @@ package
 		 */
 		protected function fireBullet(XVelocity:Number, YVelocity:Number):void
 		{
-			var bullet:Bullet = new Bullet(x , y, XVelocity, YVelocity);
+			var bullet:Bullet = new Bullet(x + width / 2 , y + height / 2, XVelocity * _bullet_speed, YVelocity * _bullet_speed);
 			bullets.add(bullet);
-			velocity.x = -XVelocity * _movementMultiplier;
-			velocity.y = -YVelocity * _movementMultiplier;
+			velocity.x -= XVelocity * _movementMultiplier;
+			velocity.y -= YVelocity * _movementMultiplier;
 		}
 		
 		/**
