@@ -13,9 +13,6 @@ package
 		private var startButton:FlxButton;
 		private var aboutButton:FlxButton;
 		
-		//text to display the controls
-		private var controlsText:FlxText;
-		
 		
         override public function create():void
         {
@@ -25,11 +22,6 @@ package
 			title.alignment = "center";
 			title.size = 16;
 			add(title);
-			
-			controlsText = new FlxText(0, 130, FlxG.width, "M&K: WASD - Move, MOUSE - Shoot\n\nX360: LAS - Move, RAS - Shoot\n\n C - Toggle Cursor, ESC - Exit");
-			controlsText.alignment = "center";
-			controlsText.size = 16;
-			add(controlsText);
 			
 			startButton = new FlxButton(25, FlxG.height - 50, "Start", onStart);
 			startButton.color = 0xffffffff;
@@ -46,18 +38,6 @@ package
 		
 		override public function update():void
 		{
-			ControllerManager.Update();
-			
-			if (ControllerManager.KeyDown(ControllerManager.ControllerOne, ControllerManager.StartButton))
-			{
-				onStart();
-			}
-			
-			if (ControllerManager.KeyDown(ControllerManager.ControllerOne, ControllerManager.BackButton))
-			{
-				onExit();
-			} 
-			
 			super.update();
 		}
 		

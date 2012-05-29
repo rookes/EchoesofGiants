@@ -22,8 +22,9 @@ package
 			//let's create the background
 			_background = new FlxSprite(0, 0);
 			add(_background);
-			_background.makeGraphic(FlxG.width * FlxG.camera.zoom, FlxG.height * FlxG.camera.zoom, 0xff000000);
 			
+			//_background.makeGraphic(FlxG.width * FlxG.camera.zoom, FlxG.height * FlxG.camera.zoom, 0xff000000);
+			_background.makeGraphic(FlxG.worldBounds.width, FlxG.worldBounds.height, 0xff222222);
 			
 			_player = new Player(FlxG.width / 2 - 2, FlxG.height / 2 - 2);
 			add(_player.bullets);
@@ -33,14 +34,17 @@ package
 			ggg.rotate(40);
 			add(ggg);
 			
+			FlxG.camera.follow(_player);
+			
+			FlxG.camera.follow(_player);
+			
 			_enemies = new FlxGroup();
-			//add(_enemies);
+			add(_enemies);
 		}
 		
 		override public function update():void
 		{
 			super.update();
-			ControllerManager.Update();
 			checkCollisions();
 			checkInput();
 			//manageEnemies();
@@ -49,7 +53,7 @@ package
 		override protected function checkInput():void
 		{
 			//if the player presses back or escape, let's return to the menu
-			if (FlxG.keys.ESCAPE || ControllerManager.KeyDown(ControllerManager.ControllerOne,ControllerManager.BackButton))
+			if (FlxG.keys.ESCAPE)
 			{
 				onBack();
 			}

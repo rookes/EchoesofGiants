@@ -25,7 +25,7 @@ package
 			title.size = 16;
 			add(title);
 			
-			aboutText = new FlxText(10, 50, FlxG.width-10, "A Hokori Interactive game made by Brett Chalupa.");
+			aboutText = new FlxText(10, 50, FlxG.width-10, "A Hokori Interactive game made by Brett Chalupa and Jonathan Miller.");
 			aboutText.alignment = "center";
 			//aboutText.size = 12;
 			add(aboutText);
@@ -53,7 +53,6 @@ package
 		
 		override public function update():void
 		{
-			ControllerManager.Update();
 			checkInput();
 			super.update();
 		}
@@ -61,7 +60,7 @@ package
 		protected function checkInput():void
 		{
 			//if the player presses back or escape, let's return to the menu
-			if (FlxG.keys.ESCAPE || ControllerManager.KeyDown(ControllerManager.ControllerOne,ControllerManager.BackButton) || ControllerManager.KeyDown(ControllerManager.ControllerOne, ControllerManager.ButtonTwo))
+			if (FlxG.keys.ESCAPE)
 			{
 				onBack();
 			}
