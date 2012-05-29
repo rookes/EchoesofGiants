@@ -64,9 +64,10 @@ package
 		{
 			FlxG.overlap(_player.bullets, _enemies, bulletHitEnemy);
 			
-			for each (var b:Bullet in _player.bullets.members)
-				if (_mirror.rect.overlapsPoint(new FlxPoint(b.x, b.y)))
-					Mirror.reflectBullet(_mirror, b);
+			FlxG.overlap(_mirror, _player.bullets, Mirror.reflectBullet);
+			//for each (var b:Bullet in _player.bullets.members)
+			//	if (_mirror.rect.overlapsPoint(new FlxPoint(b.x, b.y)))
+			//		Mirror.reflectBullet(_mirror, b);
 			
 			if (FlxG.overlap(_player, _enemies))
 			{
