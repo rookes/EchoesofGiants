@@ -2,12 +2,9 @@ package
 {
     import org.flixel.*;
 	import org.flixel.plugin.photonstorm.*;
-	import flash.utils.getTimer;
 	
     public class PlayState extends AboutState
-    {		
-		private var _player:Player;
-		
+    {
 		private var _enemies:FlxGroup;
 		public var _stars:FlxGroup;
 		
@@ -21,33 +18,26 @@ package
         {	
 			//let's create the background
 			_background = new FlxSprite(0, 0);
-			add(_background);
-			
-			//_background.makeGraphic(FlxG.width * FlxG.camera.zoom, FlxG.height * FlxG.camera.zoom, 0xff000000);
 			_background.makeGraphic(FlxG.worldBounds.width, FlxG.worldBounds.height, 0xff222222);
 			
-			_player = new Player(FlxG.width / 2 - 2, FlxG.height / 2 - 2);
-			add(_player.bullets);
-			add(_player);
+			Registry.playerBullets = new BulletManager(100);
+			Registry.player = new Player(FlxG.width / 2 - 2, FlxG.height / 2 - 2);
 		
 			var ggg:GalaxyGroup = new GalaxyGroup(100, 100).addTurret();
 			ggg.rotate(40);
+			
+			FlxG.camera.follow(Registry.player);
+			
+			add(_background);
+			add(Registry.playerBullets);
+			add(Registry.player);
 			add(ggg);
-			
-			FlxG.camera.follow(_player);
-			
-			FlxG.camera.follow(_player);
-			
-			_enemies = new FlxGroup();
-			add(_enemies);
 		}
 		
 		override public function update():void
 		{
 			super.update();
-			checkCollisions();
 			checkInput();
-			//manageEnemies();
 		}
 		
 		override protected function checkInput():void
@@ -57,44 +47,6 @@ package
 			{
 				onBack();
 			}
-		}
-		
-		private function checkCollisions():void
-		{
-			FlxG.overlap(_player.bullets, _enemies, bulletHitEnemy);
-			if (FlxG.overlap(_player, _enemies))
-			{
-				_player.respawn();
-			}
-		}
-		
-		private function bulletHitEnemy(bullet:FlxObject, enemy:FlxObject):void
-		{
-			FlxG.log("bulletHitEnemy()");
-			bullet.kill();
-			_player.bullets.remove(bullet);
-
-			enemy.hurt(1);
-			_enemies.remove(enemy);
-			
-			FlxG.score += 1;
-		}
-		
-		private function manageEnemies():void
-		{
-			if (getTimer() > lastReleased + releaseRate)
-			{
-				lastReleased = getTimer();
-
-				release();
-			}
-		}
-		
-		public function release():void
-		{
-			var enemy:Enemy = new Enemy(0, 0);
-			enemy.launch();
-			_enemies.add(enemy);
 		}
 	}
 }
