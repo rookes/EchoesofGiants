@@ -17,6 +17,7 @@ package
 		protected var _rotationAngle:Number;
 		
 		//variables to handle player movement speed
+<<<<<<< HEAD
 		private var _movementMultiplier:Number;
 		private const NORMAL_MOVEMENT_MULTIPLIER:Number = 7;
 		private const SLOW_MOVEMENT_MULTIPLIER:Number = 3;
@@ -24,6 +25,11 @@ package
 		//standard bullet speed
 		private var _bullet_speed:Number = 1;
 
+=======
+		private var _movementMultiplier:int;
+		private const MAX_MOVEMENT_MULTIPLIER:int = 100;
+		private const SLOW_MOVEMENT_MULTIPLIER:int = 0;
+>>>>>>> dded20f45bfe96d168fb7858d8c3b3fc41936a40
 		
 		//whether or not the player is in a blackhole
 		public var inBlackhole:Boolean = false;

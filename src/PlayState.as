@@ -37,8 +37,6 @@ package
 			
 			FlxG.camera.follow(_player);
 			
-			FlxG.camera.follow(_player);
-			
 			_enemies = new FlxGroup();
 			add(_enemies);
 		}
