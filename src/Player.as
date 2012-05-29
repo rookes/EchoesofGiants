@@ -19,7 +19,7 @@ package
 		//variables to handle player movement speed
 		private var _movementMultiplier:int;
 		private const MAX_MOVEMENT_MULTIPLIER:int = 100;
-		private const SLOW_MOVEMENT_MULTIPLIER:int = 50;
+		private const SLOW_MOVEMENT_MULTIPLIER:int = 0;
 		
 		//whether or not the player is in a blackhole
 		public var inBlackhole:Boolean = false;

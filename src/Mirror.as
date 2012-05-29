@@ -1,6 +1,7 @@
 package  
 {
 	import org.flixel.*;
+	import org.flixel.plugin.photonstorm.FlxMath;
 	/**
 	 * A rotatable mirror which reflects bullets and other materials.
 	 * @author Jonathan Miller
@@ -9,7 +10,7 @@ package
 	{
 		public var canRotate:Boolean = true;
 		
-		public function Mirror(X:Number = 0, Y:Number = 0, WIDTH:Number = 30, HEIGHT:Number = 5, ANGLE:Number = 0) 
+		public function Mirror(X:Number = 0, Y:Number = 0, WIDTH:Number = 3, HEIGHT:Number = 20, ANGLE:Number = 0) 
 		{
 			super(X, Y);
 			angle = ANGLE;
@@ -38,28 +39,63 @@ package
 		 * @param bullet	The bullet to be reflected
 		 */
 		public static function reflectBullet(mirror:Mirror, bullet:Bullet):void
-		{			
-			FlxU.rotatePoint(bullet.velocity.x, 
-							bullet.velocity.y, 
-							0, 
-							0, 
-							Mirror.differenceBetweenAngles(mirror.getNormalAngle(), 
-													Math.atan2(bullet.velocity.y, bullet.velocity.x)) * 2,
-							bullet.velocity);
+		{	
+			//Make sure not to reflect bullets excessively
+			if (bullet.recentlyReflected)
+				return;
+			
+			bullet.recentlyReflected = true;
+			
+			var bulletAngle:Number = FlxMath.asDegrees(FlxMath.atan2(bullet.velocity.y, bullet.velocity.x));
+			
+			/* //Failed attempt at accurate collisions
+			var ref:Number = (mirror.angle % 180) - bulletAngle - 90;
+			while (ref < 0)
+				ref += 360;
+			ref = ref % 360;
+			
+			if (ref < 180)
+			{
+				//clockwise
+				FlxU.rotatePoint(bullet.velocity.x, 
+								bullet.velocity.y, 
+								0, 
+								0, 
+								Mirror.differenceBetweenAngles(mirror.angle, bulletAngle) * 2,
+								bullet.velocity);
+			} else {
+				//counter-clockwise
+				FlxU.rotatePoint(bullet.velocity.x, 
+								bullet.velocity.y, 
+								0, 
+								0, 
+								-Mirror.differenceBetweenAngles(mirror.angle, bulletAngle) * 2,
+								bullet.velocity);
+			} */
+			
+			//Just shoot the bullet along the normal angle
+			var normal:Number = mirror.getNormalAngle();
+			
+			if (differenceBetweenAngles(normal, bulletAngle) < 90)
+				normal += 180;
+				
+			var len:Number = Math.sqrt(bullet.velocity.x * bullet.velocity.x + bullet.velocity.y * bullet.velocity.y);
+			bullet.velocity.x = Math.cos(FlxMath.asRadians(normal)) * len;
+			bullet.velocity.y = Math.sin(FlxMath.asRadians(normal)) * len;
 		}
 		
-		/** Returns the normal to the mirror as a unit vector */
+		/** Returns the normal to the mirror as a unit FlxPoint */
 		public function getNormalVector():FlxPoint
 		{
 			var theta:Number = getNormalAngle();
-			return new FlxPoint(Math.cos(theta), Math.sin(theta));
+			return new FlxPoint(Math.cos(FlxMath.asRadians(theta)), Math.sin(FlxMath.asRadians(theta)));
 		}
 		
 		/** Returns the normal to the mirror as an angle (degrees) */
 		public function getNormalAngle():Number
 		{
 			var result:Number = angle + 90;
-			return angle % 360;
+			return angle % 180;
 		}
 		
 		/** A helper function for finding the difference between two angles (NOTE: angles must be 0-360)*/

@@ -6,6 +6,8 @@ package
 	
 	public class Bullet extends FlxSprite
 	{
+		//Used to control how often bullet can be reflected
+		public var recentlyReflected:Boolean = false;
 		
 		public function Bullet(X:int, Y:int, XAxisValue:Number, YAxisValue:Number) 
 		{
@@ -22,7 +24,6 @@ package
 		override public function update():void
 		{
 			super.update();
-			
 			checkBounds();
 		}
 		
