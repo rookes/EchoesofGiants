@@ -23,6 +23,7 @@ package
 	
 		//standard bullet speed
 		private var _bullet_speed:Number = 1;
+
 		
 		//whether or not the player is in a blackhole
 		public var inBlackhole:Boolean = false;
