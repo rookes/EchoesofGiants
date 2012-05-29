@@ -11,6 +11,8 @@ package
 		private var _enemies:FlxGroup;
 		public var _stars:FlxGroup;
 		
+		public var _mirror:Mirror;
+		
 		//used for launching enemies
 		private var lastReleased:int;
 		private var releaseRate:int = 500;
@@ -29,10 +31,9 @@ package
 			_player = new Player(FlxG.width / 2 - 2, FlxG.height / 2 - 2);
 			add(_player.bullets);
 			add(_player);
-		
-			var ggg:GalaxyGroup = new GalaxyGroup(100, 100).addTurret();
-			ggg.rotate(40);
-			add(ggg);
+			
+			_mirror = new Mirror(300, 100);
+			add(_mirror);
 			
 			FlxG.camera.follow(_player);
 			
@@ -62,6 +63,9 @@ package
 		private function checkCollisions():void
 		{
 			FlxG.overlap(_player.bullets, _enemies, bulletHitEnemy);
+			
+			FlxG.overlap(_mirror, _player.bullets, Mirror.reflectBullet);
+			
 			if (FlxG.overlap(_player, _enemies))
 			{
 				_player.respawn();
