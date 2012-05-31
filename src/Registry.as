@@ -6,11 +6,13 @@ package
 	{
 		public static var player:Player;
 		public static var playerBullets:BulletManager;
+		public static var enemies:EnemyManager;
 		
 		public static function erase():void
 		{
 			player = null;
 			playerBullets = null;
+			enemies = null;
 		}
 		
 	}

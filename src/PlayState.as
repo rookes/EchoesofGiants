@@ -26,6 +26,8 @@ package
 			
 			Registry.playerBullets = new BulletManager(100);
 			Registry.player = new Player(FlxG.width / 2 - 2, FlxG.height / 2 - 2);
+			
+			Registry.enemies = new EnemyManager(100);
 		
 			var ggg:GalaxyGroup = new GalaxyGroup(100, 100).addTurret();
 			ggg.rotate(40);
@@ -36,6 +38,7 @@ package
 			add(_mirror);
 			add(Registry.playerBullets);
 			add(Registry.player);
+			add(Registry.enemies);
 			add(ggg);
 		}
 		
@@ -43,6 +46,12 @@ package
 		{
 			super.update();
 			checkInput();
+			checkCollisions();
+		}
+		
+		protected function checkCollisions():void
+		{
+			FlxG.overlap(Registry.playerBullets, Registry.enemies, Registry.enemies.bulletHitEnemy);
 		}
 		
 		override protected function checkInput():void

@@ -14,6 +14,7 @@ package
 		//the amount of time for the bulleto exist
 		//10000ms = 10s
 		private const BULLET_LIFE_TIME:uint = 10000;
+		private var timeLastKilled:int;
 		
 		/**
 		 * Create a new bullet that does not exist so it can be ready for the pool allocation in a bullet manager right away
@@ -50,10 +51,16 @@ package
 			checkBounds();
 			
 			//kill the bullet after it has existed for a set amount of time
-			if (getTimer() > BULLET_LIFE_TIME)
+			if (getTimer() > BULLET_LIFE_TIME + timeLastKilled)
 			{
 				kill();
 			}
+		}
+		
+		override public function kill():void 
+		{
+			super.kill();
+			timeLastKilled = getTimer();
 		}
 		
 		/**
@@ -63,24 +70,9 @@ package
 		protected function checkBounds():void
 		{
 			//we need to check if the bullet has pased the bounds of the screen
-			if (x >= FlxG.worldBounds.width)
+			if (x >= FlxG.worldBounds.width || x < 0 || y >= FlxG.worldBounds.height || y < 0)
 			{
 				kill();		
-			}
-			
-			if (x < 0)
-			{
-				kill();
-			}
-			
-			if (y >= FlxG.worldBounds.height)
-			{
-				kill();
-			}
-			
-			if (y < 0)
-			{
-				kill();
 			}
 		}
 	}
