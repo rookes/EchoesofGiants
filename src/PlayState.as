@@ -24,10 +24,6 @@ package
 			//let's create the background
 			_background = new FlxSprite(0, 0);
 			add(_background);
-<<<<<<< HEAD
-			_background.makeGraphic(FlxG.width * FlxG.camera.zoom, FlxG.height * FlxG.camera.zoom, 0xff000000);
-=======
->>>>>>> a6eebdb5b0aa05e359f6facc2aeba3fb2ba6fdb6
 			
 			//_background.makeGraphic(FlxG.width * FlxG.camera.zoom, FlxG.height * FlxG.camera.zoom, 0xff000000);
 			_background.makeGraphic(FlxG.worldBounds.width, FlxG.worldBounds.height, 0xff222222);
@@ -39,11 +35,8 @@ package
 			_mirror = new Mirror(300, 100);
 			add(_mirror);
 			
-<<<<<<< HEAD
-=======
 			FlxG.camera.follow(_player);
 			
->>>>>>> a6eebdb5b0aa05e359f6facc2aeba3fb2ba6fdb6
 			_enemies = new FlxGroup();
 			//add(_enemies);
 		}
