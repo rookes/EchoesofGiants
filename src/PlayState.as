@@ -8,6 +8,8 @@ package
 		private var _enemies:FlxGroup;
 		public var _stars:FlxGroup;
 		
+		public var _mirror:Mirror;
+		
 		//used for launching enemies
 		private var lastReleased:int;
 		private var releaseRate:int = 500;
@@ -20,6 +22,8 @@ package
 			_background = new FlxSprite(0, 0);
 			_background.makeGraphic(FlxG.worldBounds.width, FlxG.worldBounds.height, 0xff222222);
 			
+			_mirror = new Mirror(300, 100);
+			
 			Registry.playerBullets = new BulletManager(100);
 			Registry.player = new Player(FlxG.width / 2 - 2, FlxG.height / 2 - 2);
 		
@@ -29,6 +33,7 @@ package
 			FlxG.camera.follow(Registry.player);
 			
 			add(_background);
+			add(_mirror);
 			add(Registry.playerBullets);
 			add(Registry.player);
 			add(ggg);
