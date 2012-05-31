@@ -10,7 +10,6 @@ package
 
 	public class Player extends FlxSprite
 	{
-		public var bullets:FlxGroup;
 		private var showCursor:Boolean = true;
 		
 		protected var _nearestStar:Star; //the star closest to the player
@@ -46,7 +45,6 @@ package
 			drag.y = maxVelocity.y/4;
 			antialiasing = true;
 			exists = true;
-			bullets = new FlxGroup();
 			
 			//let's show the mouse by default
 			FlxG.mouse.show(Assets.CURSOR_TEXTURE, 2, 4, 4);
@@ -59,7 +57,6 @@ package
 		{
 			checkInput();
 			checkBounds();
-			cleanUpBullets();
 			super.update();
 		}
 		
@@ -138,27 +135,10 @@ package
 		 */
 		protected function fireBullet(XVelocity:Number, YVelocity:Number):void
 		{
-			var bullet:Bullet = new Bullet(x + width / 2 , y + height / 2, XVelocity * _bullet_speed, YVelocity * _bullet_speed);
-			bullets.add(bullet);
+			Registry.playerBullets.fire(x + width / 2 , y + height / 2, XVelocity * _bullet_speed, YVelocity * _bullet_speed);
 
 			velocity.x -= XVelocity * _movementMultiplier;
 			velocity.y -= YVelocity * _movementMultiplier;
-		}
-		
-		/**
-		 * Removes dead bullets from the bullets group
-		 * 
-		 * Seems to be super inefficient, there has to be a better way to handle this
-		 */
-		private function cleanUpBullets():void
-		{
-			for each (var bullet:Bullet in bullets)
-			{
-				if (!bullet.exists)
-				{
-					bullets.remove(bullet);
-				}
-			}
 		}
 		
 		/**
