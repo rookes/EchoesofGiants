@@ -33,6 +33,12 @@ package
 			return angularVelocity;
 		}
 		
+		/** Returns true if the mirror overlaps bullet b*/
+		public function overlapsBullet(b:Bullet):Boolean
+		{
+			return rect.overlapsPoint(new FlxPoint(b.x, b.y));			
+		}
+		
 		/** Reflect given bullet, regardless of whether the bullet is in contact with the mirror or not. The process
 		 * (conceptually) is carried out by using an invisible line parallel to the mirror's surface and pulling it up 
 		 * to the bullet, first horizontally then vertically, and reflecting the bullet off that. 
