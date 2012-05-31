@@ -5,11 +5,12 @@ package
 	public class Registry 
 	{
 		public static var player:Player;
-		public static var enemies:EnemyManager;
+		public static var playerBullets:BulletManager;
 		
 		public static function erase():void
 		{
 			player = null;
+			playerBullets = null;
 		}
 		
 	}
