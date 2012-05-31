@@ -4,19 +4,19 @@ package
 	
 	public class Star extends FlxSprite
 	{
-		protected var _type:String;
-
 		/**
-		 * The time to add to the game when a bubble is collected
+		 * What type the star is
 		 */
+		protected var _type:String;
+		
 		public function get Type():String
 		{
 			return _type;
 		}
 		
 		protected var _lifeTime:Number = 2; //the amount of time before the star exploded
-		protected var _lifeTimer:FlxTimer;
-		protected var _timerStarted:Boolean = false;
+		protected var _lifeTimer:FlxTimer; //the timer to keep track of the star if it one that explodes
+		protected var _timerStarted:Boolean = false; //a boolean value of whether or not the timer has been started
 		
 		/**
 		 * Creates a star at the specified position.
@@ -59,6 +59,9 @@ package
 			}
 		}
 		
+		/** 
+		 * Starts the count down timer
+		 */
 		public function startTimer():void
 		{
 			_lifeTimer.start(_lifeTime);
