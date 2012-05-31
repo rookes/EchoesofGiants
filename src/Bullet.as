@@ -8,6 +8,9 @@ package
 	
 	public class Bullet extends FlxSprite
 	{
+		//Used to control how often bullet can be reflected
+		public var recentlyReflected:Boolean = false;
+
 		//the amount of time for the bulleto exist
 		//10000ms = 10s
 		private const BULLET_LIFE_TIME:uint = 10000;
