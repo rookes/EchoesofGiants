@@ -4,6 +4,8 @@ package
 
 	public class Enemy extends FlxSprite
 	{
+		public static const DROP_POWERUP_CHANCE:Number = 1;
+		
 		public function Enemy()
 		{
 			super(0, 0);
@@ -15,7 +17,13 @@ package
 		 */
 		public function dropPowerup():void
 		{
-			Registry.powerups.addPowerup(x, y);
+			var p:Powerup = Registry.powerups.addPowerup(x, y);
+			
+			if (p != null)
+			{
+				p.velocity.x = velocity.x/2;
+				p.velocity.y = velocity.y/2;
+			}
 		}
 		
 		public function launch():void
@@ -32,7 +40,7 @@ package
 		override public function kill():void
 		{
 			super.kill();
-			if (Math.random() < 0.05)
+			if (Math.random() < DROP_POWERUP_CHANCE)
 				dropPowerup();
 		}
 

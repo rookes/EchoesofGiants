@@ -37,13 +37,21 @@ package
 		 * @param	Y					Y location of Powerup
 		 * @param	variableChanged		String containing name of variable in Player which should be changed
 		 * @param	amount				How large the change of variable is upon collection
+		 * 
+		 * @return 	The activated Powerup
 		 */
-		public function addPowerup(X:Number = 0, Y:Number = 0, variableChanged:String = "bulletSpeed", amount:Number = 1):void
+		public function addPowerup(X:Number = 0, Y:Number = 0, variableChanged:String = "bulletSpeed", amount:Number = 1):Powerup
 		{
 			var p:Object = getFirstAvailable();
 			
 			if (p)
+			{
 				Powerup(p).activate(X, Y, variableChanged, amount);
+				return Powerup(p);
+			}
+			
+			return null;
+			
 		}
 	}
 }
