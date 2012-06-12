@@ -1,6 +1,7 @@
 package  
 {
 	import org.flixel.*;
+	import flash.utils.getTimer;
 	/**
 	 * Powerup object, collectable by the Player
 	 * @author Jonathan Miller
@@ -18,6 +19,9 @@ package
 		
 		/** Amount changed */
 		public var amount:Number;
+		
+		private const POWERUP_LIFE_TIME:uint = 5000;
+		private var _timeActivated:uint;
 		
 		/** Default constructor, used by PowerupManager to instantiate non-active powerups*/
 		public function Powerup()
@@ -45,18 +49,39 @@ package
 			this.amount = amount;
 			
 			makeGraphic(10, 10, 0xff0000ff);
+			
+			_timeActivated = getTimer();
 		}
 		
 		public override function update():void
 		{
+			var time:int = getTimer();
+			var halfLife:int = POWERUP_LIFE_TIME / 2;
+			if (time > _timeActivated + halfLife)
+			{
+				//fade out the powerup
+				alpha = 1 - (time - _timeActivated - halfLife) / (halfLife);
+				
+				if (time > _timeActivated + POWERUP_LIFE_TIME)
+				{
+					kill();
+					return;
+				}
+			}
+			
 			var player:Player = Registry.player;
 			var xInc:Number = player.x + player.origin.x - x - origin.x;
 			var yInc:Number = player.y + player.origin.y - y - origin.y;
-						
+				
+			//My fat, ineffecient way of accelerating towards the Player
 			if (Math.abs(xInc) < ACCEL_RANGE && Math.abs(yInc) < ACCEL_RANGE)
 			{			
 				velocity.x += ((ACCEL_RANGE - Math.abs(xInc)) / ACCEL_RANGE + 0.05) * ACCEL_TOWARDS_PLAYER * (Math.abs(xInc)/xInc);
 				velocity.y += ((ACCEL_RANGE - Math.abs(yInc)) / ACCEL_RANGE + 0.05) * ACCEL_TOWARDS_PLAYER * (Math.abs(yInc)/yInc);
+			
+				//The powerup is active again!
+				_timeActivated = time;
+				alpha = 1;
 			} 
 	
 			super.update();
