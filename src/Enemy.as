@@ -16,7 +16,6 @@ package
 		public function dropPowerup():void
 		{
 			Registry.powerups.addPowerup(x, y);
-			trace("Powerup generated");
 		}
 		
 		public function launch():void

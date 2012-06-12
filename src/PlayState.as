@@ -55,6 +55,7 @@ package
 		protected function checkCollisions():void
 		{
 			FlxG.overlap(Registry.playerBullets, Registry.enemies, Registry.enemies.bulletHitEnemy);
+			FlxG.overlap(Registry.powerups, Registry.player, PowerupManager.collectPowerup);
 		}
 		
 		override protected function checkInput():void

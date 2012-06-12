@@ -25,7 +25,10 @@ package
 		 */
 		public static function collectPowerup(powerup:Powerup, player:Player):void
 		{
-			player[powerup.variableChanged] += powerup.amount;			
+			//TODO: Throw exception for unaccepted variable name
+			player[powerup.variableChanged] += powerup.amount;	
+			
+			powerup.kill();
 		}
 		
 		/** Activates a Powerup using the default Powerup constructor parameters
@@ -35,7 +38,7 @@ package
 		 * @param	variableChanged		String containing name of variable in Player which should be changed
 		 * @param	amount				How large the change of variable is upon collection
 		 */
-		public function addPowerup(X:Number = 0, Y:Number = 0, variableChanged:String = "", amount:int = 1):void
+		public function addPowerup(X:Number = 0, Y:Number = 0, variableChanged:String = "bulletSpeed", amount:Number = 1):void
 		{
 			var p:Object = getFirstAvailable();
 			

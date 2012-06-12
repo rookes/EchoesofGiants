@@ -11,7 +11,7 @@ package
 		public var variableChanged:String;
 		
 		/** Amount changed */
-		public var amount:int;
+		public var amount:Number;
 		
 		/** Default constructor, used by PowerupManager to instantiate non-active powerups*/
 		public function Powerup()
@@ -21,7 +21,7 @@ package
 		}
 		
 		/** Activate a non-existent Powerup and set its fields*/
-		public function activate(X:Number = 0, Y:Number = 0, variableChanged:String = "", amount:int = 1):void
+		public function activate(X:Number = 0, Y:Number = 0, variableChanged:String = "bulletSpeed", amount:Number = 1):void
 		{
 			exists = true //important, obviously
 			
