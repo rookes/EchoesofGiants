@@ -16,10 +16,6 @@ package
 		protected var _rotationAngle:Number;
 		
 		//variables to handle player movement speed
-	
-		//standard bullet speed
-		private var _bullet_speed:Number = 1;
-
 		private var _movementMultiplier:int;
 		private const NORMAL_MOVEMENT_MULTIPLIER:int = 7;
 		private const SLOW_MOVEMENT_MULTIPLIER:int = 3;
@@ -27,6 +23,13 @@ package
 		//whether or not the player is in a blackhole
 		public var inBlackhole:Boolean = false;
 
+		//some possible variables for powerups to change
+		public var weight:Number = 1.0;
+		public var grappleStrength:Number = 1.0;
+		public var bulletSize:Number = 1.0;
+		public var bulletSpeed:Number = 1.0;
+		public var bulletLoadTime:Number = 1.0;
+		
 		/**
 		 * Creates a player at the specified position
 		 * 
