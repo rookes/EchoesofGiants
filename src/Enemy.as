@@ -11,6 +11,14 @@ package
 			exists = false;
 		}
 
+		/** Drops a powerup with default stats at the current location of the enemy
+		 */
+		public function dropPowerup():void
+		{
+			Registry.powerups.addPowerup(x, y);
+			trace("Powerup generated");
+		}
+		
 		public function launch():void
 		{
 			x = 128 + int(Math.random() * (FlxG.width - 128));
@@ -25,6 +33,8 @@ package
 		override public function kill():void
 		{
 			super.kill();
+			if (Math.random() < 0.05)
+				dropPowerup();
 		}
 
 		override public function update():void

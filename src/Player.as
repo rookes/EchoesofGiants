@@ -138,7 +138,7 @@ package
 		 */
 		protected function fireBullet(XVelocity:Number, YVelocity:Number):void
 		{
-			Registry.playerBullets.fire(x + width / 2 , y + height / 2, XVelocity * _bullet_speed, YVelocity * _bullet_speed);
+			Registry.playerBullets.fire(x + width / 2 , y + height / 2, XVelocity * bulletSpeed, YVelocity * bulletSpeed);
 
 			velocity.x -= XVelocity * _movementMultiplier;
 			velocity.y -= YVelocity * _movementMultiplier;
