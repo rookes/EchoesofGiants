@@ -53,6 +53,29 @@ package
 			_timeActivated = getTimer();
 		}
 		
+		protected function checkBounds():void
+		{
+			if (x >= FlxG.worldBounds.width)
+			{
+				x = 1;
+			}
+			
+			if (x <= 0)
+			{
+				x = FlxG.worldBounds.width;
+			}
+			
+			if (y >= FlxG.worldBounds.height)
+			{
+				y = 1;
+			}
+			
+			if (y <= 0)
+			{
+				y = FlxG.worldBounds.height;
+			}
+		}
+		
 		public override function update():void
 		{
 			var time:int = getTimer();
@@ -85,6 +108,8 @@ package
 			} 
 	
 			super.update();
+			
+			checkBounds();
 		}
 	}
 }
