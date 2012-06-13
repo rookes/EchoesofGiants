@@ -1,7 +1,6 @@
 package
 {
     import org.flixel.*
-	import flash.desktop.NativeApplication;
 
     public class MenuState extends FlxState
     {
@@ -45,11 +44,6 @@ package
 		{
 			FlxG.mouse.hide();
 			FlxG.switchState(new PlayState());
-		}
-		
-		protected function onExit():void
-		{
-			NativeApplication.nativeApplication.exit();
 		}
 		
 		protected function onAbout():void
