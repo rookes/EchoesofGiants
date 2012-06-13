@@ -33,8 +33,6 @@ package
 			{
 				Bullet(getFirstAvailable()).fire(X, Y, XAxisValue, YAxisValue);
 			}
-		}
-		
+		}	
 	}
-
 }

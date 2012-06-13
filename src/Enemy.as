@@ -4,6 +4,8 @@ package
 
 	public class Enemy extends FlxSprite
 	{
+		public static const DROP_POWERUP_CHANCE:Number = 1;
+		
 		public function Enemy()
 		{
 			super(0, 0);
@@ -11,6 +13,19 @@ package
 			exists = false;
 		}
 
+		/** Drops a powerup with default stats at the current location of the enemy
+		 */
+		public function dropPowerup():void
+		{
+			var p:Powerup = Registry.powerups.addPowerup(x, y);
+			
+			if (p != null)
+			{
+				p.velocity.x = velocity.x/2;
+				p.velocity.y = velocity.y/2;
+			}
+		}
+		
 		public function launch():void
 		{
 			x = 128 + int(Math.random() * (FlxG.width - 128));
@@ -25,6 +40,8 @@ package
 		override public function kill():void
 		{
 			super.kill();
+			if (Math.random() < DROP_POWERUP_CHANCE)
+				dropPowerup();
 		}
 
 		override public function update():void
