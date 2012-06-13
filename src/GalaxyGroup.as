@@ -31,6 +31,8 @@ package
 		 */
 		public function GalaxyGroup(X:Number = 0, Y:Number = 0, R:Number = 12) 
 		{
+			super();
+			
 			_galaxy = new Galaxy(X, Y);
 			add(_galaxy);
 			add(_bullets);
@@ -40,6 +42,9 @@ package
 			x = X;
 			y = Y;
 			radius = R;
+			
+			//mark as rotatable
+			activateRotation();
 		}
 		
 		
@@ -119,6 +124,16 @@ package
 		{
 			setAll("angularVelocity", angularVelocity);
 			super.update();
+		}
+		
+		public function activateRotation():void
+		{
+			Registry.rotatables.add(this);
+		}
+		
+		public function deactivateRotation():void
+		{
+			Registry.rotatables.remove(this);
 		}
 	}
 

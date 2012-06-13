@@ -13,5 +13,11 @@ package
 		 * @return Returns the current angular velocity of the object.
 		 * */
 		function rotate(theta:Number):Number;
+		
+		/** Allow the Player to grapple this object */
+		function activateRotation():void;
+		
+		/** Do not allow the Player to grapple this object */
+		function deactivateRotation():void;
 	}
 }
