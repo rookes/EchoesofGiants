@@ -5,12 +5,11 @@
     <movie outputType="Application" />
     <movie input="" />
     <movie path="bin\echoes.swf" />
-    <movie fps="30" />
+    <movie fps="60" />
     <movie width="800" />
     <movie height="600" />
     <movie version="3" />
     <movie minorVersion="1" />
-    <movie platform="AIR" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -42,7 +41,7 @@
     <option linkReport="" />
     <option loadExterns="" />
     <option staticLinkRSL="True" />
-    <option additional="+configname=air" />
+    <option additional="" />
     <option compilerConstants="" />
     <option minorVersion="" />
   </build>
@@ -56,9 +55,6 @@
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
-    <element path="extension\joyquery.ane" />
-    <element path="extension\joyquery.swc" />
-    <element path="lib\joyquery.swc" />
   </externalLibraryPaths>
   <!-- Runtime Shared Libraries -->
   <rslPaths>
@@ -86,9 +82,8 @@
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
   <options>
-    <option showHiddenPaths="False" />
-    <option testMovie="Custom" />
-    <option testMovieCommand="Run.bat" />
+	<option showHiddenPaths="False" />
+    <option testMovie="Default" />
   </options>
   <!-- Plugin storage -->
   <storage />
