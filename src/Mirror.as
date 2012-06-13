@@ -99,6 +99,12 @@ package
 			super.update();
 			rect.angle = angle;
 		}
+		
+		override public function kill():void 
+		{
+			super.kill();
+			deactivateRotation();
+		}
 	}
 
 }

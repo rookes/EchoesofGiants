@@ -19,7 +19,6 @@ package
 		public var maxAngularVelocity:Number = 40;
 		
 		protected var _galaxy:Galaxy;
-		protected var _bullets:FlxGroup = new FlxGroup();
 		protected var _mirror:Mirror = null;
 		protected var _turrets:FlxGroup = new FlxGroup();
 		
@@ -35,7 +34,6 @@ package
 			
 			_galaxy = new Galaxy(X, Y);
 			add(_galaxy);
-			add(_bullets);
 			add(_mirror);
 			add(_turrets);
 			
@@ -134,6 +132,16 @@ package
 		public function deactivateRotation():void
 		{
 			Registry.rotatables.remove(this);
+		}
+		
+		override public function kill():void 
+		{
+			super.kill();
+			deactivateRotation();
+			
+			_galaxy.kill();
+			_mirror.kill();
+			_turrets.kill();
 		}
 	}
 
