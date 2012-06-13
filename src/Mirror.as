@@ -18,6 +18,8 @@ package
 			makeGraphic(WIDTH, HEIGHT);
 			rect = new FlxAngledRect(x, y, WIDTH, HEIGHT, ANGLE);
 			rotate(30);
+			
+			activateRotation();
 		}
 		
 		/** Rotates the Mirror by a certain amount of degrees if the Mirror is avaiable for rotation (see var "canRotate").
@@ -31,6 +33,16 @@ package
 				angularVelocity = theta;
 			
 			return angularVelocity;
+		}
+		
+		public function activateRotation():void
+		{
+			Registry.rotatables.add(this);	
+		}
+		
+		public function deactivateRotation():void
+		{
+			Registry.rotatables.remove(this);	
 		}
 		
 		/** Returns true if the mirror overlaps bullet b*/
@@ -86,6 +98,12 @@ package
 		{
 			super.update();
 			rect.angle = angle;
+		}
+		
+		override public function kill():void 
+		{
+			super.kill();
+			deactivateRotation();
 		}
 	}
 

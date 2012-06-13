@@ -22,14 +22,13 @@ package
 			_background = new FlxSprite(0, 0);
 			_background.makeGraphic(FlxG.worldBounds.width, FlxG.worldBounds.height, 0xff222222);
 			
-			_mirror = new Mirror(300, 100);
-			
 			Registry.playerBullets = new BulletManager(100);
 			Registry.player = new Player(FlxG.width / 2 - 2, FlxG.height / 2 - 2);
-			
 			Registry.enemies = new EnemyManager(100);
-			
 			Registry.powerups = new PowerupManager(15);
+			Registry.rotatables = new RotatableGroup();
+			
+			_mirror = new Mirror(300, 100);
 		
 			var ggg:GalaxyGroup = new GalaxyGroup(100, 100).addTurret();
 			ggg.rotate(40);
