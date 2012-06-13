@@ -27,7 +27,7 @@ package
 		public var weight:Number = 1.0;
 		public var grappleStrength:Number = 1.0;
 		public var bulletSize:Number = 1.0;
-		public var bulletSpeed:Number = 1.0;
+		public var bulletSpeed:Number = 150;
 		public var bulletLoadTime:Number = 1.0;
 		
 		/**
@@ -88,7 +88,7 @@ package
 			{
 				//the angle between the player and the mouse
 				var angle:Number = FlxU.getAngle(FlxG.mouse.getWorldPosition(), new FlxPoint(x, y));
-				fireBullet(Math.cos((angle+90)/(180/Math.PI)), Math.sin((angle+90)/(180/Math.PI)));
+				fireBullet(Math.cos((angle + 90)*(Math.PI / 180)), Math.sin((angle + 90) * (Math.PI / 180)));
 			}
 			
 			//if the user is pressing shift then slowdown the player's movement
@@ -138,7 +138,7 @@ package
 		 */
 		protected function fireBullet(XVelocity:Number, YVelocity:Number):void
 		{
-			Registry.playerBullets.fire(x + width / 2 , y + height / 2, XVelocity * bulletSpeed, YVelocity * bulletSpeed);
+			Registry.playerBullets.fire(x + origin.x , y + origin.y, XVelocity * bulletSpeed, YVelocity * bulletSpeed);
 
 			velocity.x -= XVelocity * _movementMultiplier;
 			velocity.y -= YVelocity * _movementMultiplier;

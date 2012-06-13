@@ -40,7 +40,7 @@ package
 		 * 
 		 * @return 	The activated Powerup
 		 */
-		public function addPowerup(X:Number = 0, Y:Number = 0, variableChanged:String = "bulletSpeed", amount:Number = 1):Powerup
+		public function addPowerup(X:Number = 0, Y:Number = 0, variableChanged:String = "bulletSpeed", amount:Number = 50):Powerup
 		{
 			var p:Object = getFirstAvailable();
 			
